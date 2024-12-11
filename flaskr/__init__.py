@@ -21,7 +21,7 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
+    
     from . import api
 
     app.register_blueprint(api.bp)

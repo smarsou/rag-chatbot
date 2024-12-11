@@ -23,9 +23,12 @@ class AssistantAPI(metaclass=SingletonMeta):
         self.client = OpenAI()
 
     def process_user_request(self, user_prompt):
-        fetched_system_prompt = open('system.prompt', 'r').readlines()
-        system_prompt = ''.join(fetched_system_prompt)
-
+        try :
+            fetched_system_prompt = open('system.prompt', 'r').readlines()
+            system_prompt = ''.join(fetched_system_prompt)
+        except:
+            raise Exception("System prompt error")
+        
         response = self.client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -57,4 +60,4 @@ class AssistantAPI(metaclass=SingletonMeta):
         frequency_penalty=0,
         presence_penalty=0
         )
-        return response.choices[0].message
+        return str(response.choices[0].message.content)
