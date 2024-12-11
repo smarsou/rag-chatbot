@@ -1,5 +1,7 @@
 from openai import OpenAI
 
+MAX_REQUESTS_PER_DAY=500
+
 class SingletonMeta(type):
     """
     Meta class to implement singleton.
@@ -21,8 +23,16 @@ class AssistantAPI(metaclass=SingletonMeta):
 
     def __init__(self):
         self.client = OpenAI()
+        self.total_requests = 0
 
     def process_user_request(self, user_prompt):
+
+        if self.total_requests >= MAX_REQUESTS_PER_DAY:
+            raise Exception("Max requests limit.")
+        
+        if len(user_prompt)>1000:
+            raise Exception("User request is too long.")
+
         try :
             fetched_system_prompt = open('system.prompt', 'r').readlines()
             system_prompt = ''.join(fetched_system_prompt)
@@ -60,4 +70,7 @@ class AssistantAPI(metaclass=SingletonMeta):
         frequency_penalty=0,
         presence_penalty=0
         )
+
+        self.total_requests += 1
+
         return str(response.choices[0].message.content)
