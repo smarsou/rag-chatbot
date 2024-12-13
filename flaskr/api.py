@@ -11,11 +11,11 @@ ass = AssistantAPI()
 @bp.route('/gen',methods=['POST'])
 def gen():
     if request.method == 'POST':
-        user_request = request.json['content']
-        if user_request:
+        chat_request = request.json
+        if chat_request:
             try:
-                return ass.process_user_request(user_request), 200
+                return ass.process_user_request(chat_request), 200
             except:
                 return 'Internal Server Error', 500
-        else: 
+        else:
             return 'The request of the user is empty', 400

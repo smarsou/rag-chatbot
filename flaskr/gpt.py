@@ -25,22 +25,23 @@ class AssistantAPI(metaclass=SingletonMeta):
         self.client = OpenAI()
         self.total_requests = 0
 
-    def process_user_request(self, user_prompt):
+    def process_user_request(self, chat_request):
 
+        # Process user request
         if self.total_requests >= MAX_REQUESTS_PER_DAY:
             raise Exception("Max requests limit.")
         
-        if len(user_prompt)>1000:
-            raise Exception("User request is too long.")
-
+        if len(chat_request)>30:
+            chat_request = chat_request[30:]
+        
+        # Retrieve system prompt
         try :
             fetched_system_prompt = open('system.prompt', 'r').readlines()
             system_prompt = ''.join(fetched_system_prompt)
         except:
             raise Exception("System prompt error")
         
-        response = self.client.chat.completions.create(
-        model="gpt-4o-mini",
+        # Init messages with system prompt
         messages=[
             {
             "role": "system",
@@ -50,17 +51,26 @@ class AssistantAPI(metaclass=SingletonMeta):
                 "text": system_prompt
                 }
             ]
-            },
-            {
-            "role": "user",
+            }
+        ]
+        
+        # Add the messages to send in the prompt (used to keep short-term history of the discussion) 
+        for chat_unit in chat_request:
+            messages.append(
+                {
+            "role": chat_unit['role'],
             "content": [
                 {
                 "type": "text",
-                "text": user_prompt
+                "text": chat_unit['content']
                 }
             ]
             }
-        ],
+            )
+        
+        # Send the request using the OpenAI API
+        response = self.client.chat.completions.create(
+        model="gpt-4o-mini",
         response_format={
             "type": "text"
         },
@@ -72,5 +82,6 @@ class AssistantAPI(metaclass=SingletonMeta):
         )
 
         self.total_requests += 1
-
+        
+        # Get the content of the message
         return str(response.choices[0].message.content)
