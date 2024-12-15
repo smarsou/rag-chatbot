@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_cors import CORS
+import logging
 
 def create_app(test_config=None):
     # create and configure the app
@@ -28,5 +29,8 @@ def create_app(test_config=None):
     app.register_blueprint(api.bp)
 
     CORS(app)
+
+    # Logging
+    logging.basicConfig(filename='chatbot.log', encoding='utf-8', level=logging.DEBUG)
 
     return app

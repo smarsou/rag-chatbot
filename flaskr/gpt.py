@@ -1,4 +1,5 @@
 from openai import OpenAI
+import logging
 
 MAX_REQUESTS_PER_DAY=500
 
@@ -31,8 +32,8 @@ class AssistantAPI(metaclass=SingletonMeta):
         if self.total_requests >= MAX_REQUESTS_PER_DAY:
             raise Exception("Max requests limit.")
         
-        if len(chat_request)>30:
-            chat_request = chat_request[30:]
+        if len(chat_request)>15:
+            chat_request = chat_request[15:]
         
         # Retrieve system prompt
         try :
@@ -74,6 +75,7 @@ class AssistantAPI(metaclass=SingletonMeta):
         response_format={
             "type": "text"
         },
+        messages=messages,
         temperature=1,
         max_tokens=1000,
         top_p=1,
