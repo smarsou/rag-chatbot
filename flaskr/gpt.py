@@ -1,7 +1,8 @@
 from openai import OpenAI
 import logging
 
-MAX_REQUESTS_PER_DAY=500
+MAX_REQUESTS_PER_DAY=2000
+MAX_LENGTH_TEXT=300
 
 class SingletonMeta(type):
     """
@@ -32,9 +33,13 @@ class AssistantAPI(metaclass=SingletonMeta):
         if self.total_requests >= MAX_REQUESTS_PER_DAY:
             raise Exception("Max requests limit.")
         
-        if len(chat_request)>15:
-            chat_request = chat_request[15:]
-        
+        if len(chat_request)>20:
+            chat_request = chat_request[20:]
+
+        for chat in chat_request:
+            if len(chat['content'])>MAX_LENGTH_TEXT:
+                chat['content']=chat['content'][:MAX_LENGTH_TEXT]
+
         # Retrieve system prompt
         try :
             fetched_system_prompt = open('system.prompt', 'r').readlines()
