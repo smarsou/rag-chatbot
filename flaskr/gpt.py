@@ -50,7 +50,7 @@ class AssistantAPI(metaclass=SingletonMeta):
             chat_request = chat_request[20:]
 
         # Retrieve RAG documents
-        retrieved_docs = self.vector_store.similarity_search(chat_request[-1]['content'], k=10)
+        retrieved_docs = self.vector_store.similarity_search(chat_request[-1]['content'], k=4)
         docs_content = "\n\n".join([doc.page_content for doc in retrieved_docs])
 
         for chat in chat_request:

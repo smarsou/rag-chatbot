@@ -4,7 +4,7 @@ from langchain_core.documents import Document
 
 embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"  # Uses psycopg3!
-collection_name = "my_docs"
+collection_name = "portfolio"
 vector_store = PGVector(
     embeddings=embeddings,
     collection_name=collection_name,
