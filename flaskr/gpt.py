@@ -33,6 +33,7 @@ class AssistantAPI(metaclass=SingletonMeta):
         self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
         self.connection = os.environ.get("PGVECTOR_CONNECTION")
         self.collection_name = os.environ.get("PGVECTOR_COLLECTION_NAME")
+        logging.info(f"Using connection: {self.connection} and collection name: {self.collection_name}")
         self.vector_store = PGVector(
             embeddings=self.embeddings,
             collection_name=self.collection_name,
