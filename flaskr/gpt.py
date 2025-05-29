@@ -1,5 +1,8 @@
 from openai import OpenAI
 import logging
+import os
+from langchain_openai import OpenAIEmbeddings
+from langchain_postgres import PGVector
 
 MAX_REQUESTS_PER_DAY=2000
 MAX_LENGTH_TEXT=300
@@ -26,6 +29,16 @@ class AssistantAPI(metaclass=SingletonMeta):
     def __init__(self):
         self.client = OpenAI()
         self.total_requests = 0
+        ## RAG Vector Store Initialization
+        self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+        self.connection = os.environ.get("PGVECTOR_CONNECTION")
+        self.collection_name = os.environ.get("PGVECTOR_COLLECTION_NAME")
+        self.vector_store = PGVector(
+            embeddings=self.embeddings,
+            collection_name=self.collection_name,
+            connection=self.connection,
+            use_jsonb=True,
+        )
 
     def process_user_request(self, chat_request):
 
@@ -35,6 +48,10 @@ class AssistantAPI(metaclass=SingletonMeta):
         
         if len(chat_request)>20:
             chat_request = chat_request[20:]
+
+        # Retrieve RAG documents
+        retrieved_docs = self.vector_store.similarity_search(chat_request[-1]['content'], k=10)
+        docs_content = "\n\n".join([doc.page_content for doc in retrieved_docs])
 
         for chat in chat_request:
             if len(chat['content'])>MAX_LENGTH_TEXT:
@@ -47,7 +64,7 @@ class AssistantAPI(metaclass=SingletonMeta):
         except:
             raise Exception("System prompt error")
         
-        # Init messages with system prompt
+        # 1. Init messages with system prompt
         messages=[
             {
             "role": "system",
@@ -59,8 +76,22 @@ class AssistantAPI(metaclass=SingletonMeta):
             ]
             }
         ]
+
+        # 2. Add the retrieved documents to the messages
+        if docs_content:
+            messages.append(
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"Relevant context:\n{docs_content}"
+                        }
+                    ]
+                }
+            )
         
-        # Add the messages to send in the prompt (used to keep short-term history of the discussion) 
+        # 3. Add the user request with the history of the discussion to send in the prompt (used to keep short-term history of the discussion) 
         for chat_unit in chat_request:
             messages.append(
                 {
