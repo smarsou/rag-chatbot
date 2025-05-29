@@ -14,7 +14,7 @@ vector_store = PGVector(
 
 docs = []
 
-with open("docs.txt", "r") as file:
+with open("rag_docs.txt", "r") as file:
     for line in file:
         docs.append(
             Document(
