@@ -26,4 +26,4 @@ while True:
     retrieved_docs = vector_store.similarity_search(query, k=num_docs)
     print(retrieved_docs)
     for doc, i in enumerate(retrieved_docs):
-        print(i + " : " + doc.page_content)
+        print(str(i) + " : " + str(doc.page_content))
