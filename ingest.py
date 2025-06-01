@@ -2,7 +2,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_postgres import PGVector
 from langchain_core.documents import Document
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+embeddings = OpenAIEmbeddings(model="text-embedding-3-large", dimensions=1536)
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"  # Uses psycopg3!
 collection_name = "portfolio"
 vector_store = PGVector(
