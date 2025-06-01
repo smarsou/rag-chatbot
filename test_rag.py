@@ -4,7 +4,8 @@ import os
 from langchain_openai import OpenAIEmbeddings
 from langchain_postgres import PGVector
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+key = input("Enter your OpenAI API key : ")
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small", api_key=key)
 connection = input("Paste the url for connection with the Postgres Vector database : ")
 collection_name = "portfolio"
 print(f"Trying connection using connection: {connection} and collection name: {collection_name}")
