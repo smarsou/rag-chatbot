@@ -1,6 +1,6 @@
-# Chatbot API Portfolio
+# RAG Chatbot - API used on my Portfolio
 
-This repository is the code of my chatbot microservice API built using Flask and OpenAI's API, designed to enhance my portfolio and to showcase my skills in web development and AI integration.
+This repository is the code of my chatbot API built using Flask and OpenAI's API, designed to enhance my portfolio website and to showcase my skills in web development and AI integration.
 
 Check my portfolio to give it a try : https://smarsou.fr
 
@@ -12,20 +12,23 @@ Flask REST API developed following the official documentation for a production-r
 - Integration with OpenAI's API for processing user requests securely and efficiently.
 - Implementation of request limits and input validation to ensure stability and security.
 
-## Chatbot specific data
+## RAG
 
-For now, I'm using only the power of prompt engineering to give data to the model to answer questions with accurate information. You can find the system prompt in the file *system.prompt*.
+The data is retrieved at each request using a RAG system.
 
-Using a more advanced RAG (Retrieval-Augmented Generation) technique to improve chatbot responses is a future goal on my roadmap.
+For this RAG, we use langchain alongside PostgreSQL as a Vector Database. 
+
+The data is ingested using the script `rag/ingest.py` which get the data from the file `rag/rag_docs.txt`. 
+
+The retrieval can be tested using the script `rag/test_rag.py`.
 
 ## Deployment
 
 This API is deployed on an Ubuntu server, alongside:
 
 - My portfolio Spring Boot web application.
-- My portfolio data api which handles my projects' data.
-- An AI classification NLP project showcasing advanced text analysis techniques.
-- A data visualization project leveraging interactive charts for insights.
+- My portfolio CRUD api which handles my projects' data.
+- some other projects...
   
 Deployment is managed using Docker, ensuring consistency and ease of replication. This approach showcases my proficiency in:
 
@@ -37,12 +40,7 @@ For more details, see the repository *smarsou/spring-web-portfolio*
 ## Skills Highlighted
 
 - **Web Development**: Building REST APIs with Flask.
-- **AI Integration**: Implemented OpenAI API for generative tasks.
+- **AI Integration**: Implemented RAG system for generative tasks.
 - **DevOps**: Deployed the API and other services using Docker.
 - **Security**: Enforced request limits and input validation.
-
----
-
-### Note
-This project demonstrates my ability to combine software engineering and AI knowledge to create functional, production-level applications. For additional information or questions, feel free to contact me.
 

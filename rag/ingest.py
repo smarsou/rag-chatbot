@@ -1,8 +1,13 @@
+"""
+A script to ingest data into the Vector Database (PGVector).
+This script reads documents from a text file ("rag_docs.txt") and adds them to the PGVector database.
+"""
+
 from langchain_openai import OpenAIEmbeddings
 from langchain_postgres import PGVector
 from langchain_core.documents import Document
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large", dimensions=3072, chunk_size=1)
+embeddings = OpenAIEmbeddings(model="text-embedding-3-large", dimensions=1536)
 connection = "postgresql+psycopg://langchain:langchain@localhost:6024/langchain"  # Uses psycopg3!
 collection_name = "portfolio"
 vector_store = PGVector(
@@ -10,7 +15,7 @@ vector_store = PGVector(
     collection_name=collection_name,
     connection=connection,
     use_jsonb=True,
-    embedding_length=3072,
+    embedding_length=1536,
 )
 
 docs = []

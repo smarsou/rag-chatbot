@@ -1,3 +1,7 @@
+"""
+A script to test the retrieval of documents from the Vector Database (PGVector).
+"""
+
 from openai import OpenAI
 import logging
 import os
