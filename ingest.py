@@ -10,6 +10,7 @@ vector_store = PGVector(
     collection_name=collection_name,
     connection=connection,
     use_jsonb=True,
+    embedding_length=1536,
 )
 
 docs = []
