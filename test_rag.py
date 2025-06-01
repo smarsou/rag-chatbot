@@ -20,6 +20,10 @@ print("Connection established successfully.")
 while True:
     query = input("Enter your query : ")
     num_docs = input("How many documents do you want to retrieve ? (default 4) : ")
+    if not num_docs:
+        num_docs = "4"
+    num_docs = int(num_docs)
     retrieved_docs = vector_store.similarity_search(query, k=num_docs)
+    print(retrieved_docs)
     for doc, i in enumerate(retrieved_docs):
         print(i + " : " + doc.page_content)
