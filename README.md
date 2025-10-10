@@ -2,8 +2,6 @@
 
 This repository is the code of my chatbot API built using Flask and OpenAI's API, designed to enhance my portfolio website and to showcase my skills in web development and AI integration.
 
-Check my portfolio to give it a try : https://smarsou.fr
-
 ## Flask
 
 Flask REST API developed following the official documentation for a production-ready application. The project demonstrates:
@@ -43,4 +41,5 @@ For more details, see the repository *smarsou/spring-web-portfolio*
 - **AI Integration**: Implemented RAG system for generative tasks.
 - **DevOps**: Deployed the API and other services using Docker.
 - **Security**: Enforced request limits and input validation.
+
 
