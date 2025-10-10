@@ -12,6 +12,8 @@ Flask REST API developed following the official documentation for a production-r
 
 ## RAG
 
+⚠️ The Rag system still need to be improved for more accurate answer ⚠️
+
 The data is retrieved at each request using a RAG system.
 
 For this RAG, we use langchain alongside PostgreSQL as a Vector Database. 
@@ -41,5 +43,6 @@ For more details, see the repository *smarsou/spring-web-portfolio*
 - **AI Integration**: Implemented RAG system for generative tasks.
 - **DevOps**: Deployed the API and other services using Docker.
 - **Security**: Enforced request limits and input validation.
+
 
 
