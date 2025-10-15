@@ -39,7 +39,5 @@ class RAGQueryPipeline:
     def __init__(self, vector_store: VectorStoreInterface):
         self.vector_store = vector_store.get_vector_store()
 
-    def query(self, query: str):
-        relevant_docs = self.vector_store.similarity_search(query)
-        all_splits = self.splitter.split(relevant_docs)
-        return all_splits
+    def query(self, query: str, k :int = 4):
+        return self.vector_store.similarity_search(query, k=k)
