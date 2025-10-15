@@ -12,17 +12,17 @@ Flask REST API developed following the official documentation for a production-r
 
 ## RAG
 
-⚠️ The Rag system still need to be improved for more accurate answer ⚠️
-
 The data is retrieved at each request using a RAG system.
 
-For this RAG, we use langchain alongside PostgreSQL as a Vector Database. 
+For this RAG, we use langchain alongside PostgreSQL as a Vector Database.
 
-The data is ingested using the script `rag/ingest.py` which get the data from the file `rag/rag_docs.txt`. 
+The data is ingested using the script `scripts/rag_ingest.py` which get the data from pdf files at `rag/data/pdf/`. 
 
-The retrieval can be tested using the script `rag/test_rag.py`.
+The retrieval can be tested using the script `scripts/test_rag_query.py`.
 
 ## Deployment
+
+(old information)
 
 This API is deployed on an Ubuntu server, alongside:
 
