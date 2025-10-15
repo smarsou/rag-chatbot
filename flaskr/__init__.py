@@ -2,8 +2,10 @@ import os
 from flask import Flask
 from flask_cors import CORS
 import logging
+from dotenv import load_dotenv
 
 def create_app(test_config=None):
+    load_dotenv()
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -25,12 +27,14 @@ def create_app(test_config=None):
         pass
     
     from . import api
+    from . import frontend
 
     app.register_blueprint(api.bp)
+    app.register_blueprint(frontend.bp)
 
     CORS(app)
 
     # Logging
-    logging.basicConfig(filename='chatbot.log', encoding='utf-8', level=logging.DEBUG)
+    logging.basicConfig(filename='logs/chatbot.log', encoding='utf-8', level=logging.DEBUG)
 
     return app

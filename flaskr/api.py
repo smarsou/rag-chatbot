@@ -17,6 +17,7 @@ def gen():
                 logging.info(" --> Response: \"" + response + "\"")
                 return response, 200
             except Exception as e:
+                logging.error(chat_request)
                 logging.error(e)
                 return 'Internal Server Error', 500
         else:

@@ -1,11 +1,15 @@
 *.token
 env/
 venv/
+backup/
 *.backup
 *.pyc
 __pycache__/
-
+logs/
 instance/
+
+rag/data/pdf/*
+rag/model/*
 
 .pytest_cache/
 .coverage
@@ -16,3 +20,7 @@ build/
 *.egg-info/
 
 *.log
+
+HELP.md
+
+*.env
