@@ -9,8 +9,6 @@ from rag.pipelines import RAGQueryPipeline
 from dotenv import load_dotenv
 load_dotenv()
 
-
-
 vector_store_interface = MyVectorStoreInterface(embedding=MyEmbedding(api_base=os.getenv("EMBEDDING_API_BASE")), connection=os.getenv("VECTOR_DB_CONNECTION"), collection_name=os.getenv("VECTOR_DB_COLLECTION"))
 
 query_api = RAGQueryPipeline(vector_store_interface)

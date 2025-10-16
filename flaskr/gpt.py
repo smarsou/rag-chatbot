@@ -6,6 +6,7 @@ import requests
 
 MAX_REQUESTS_PER_DAY=2000
 MAX_LENGTH_TEXT=300
+logger = logging.getLogger(__name__)
 
 class SingletonMeta(type):
     """
@@ -28,15 +29,15 @@ class SingletonMeta(type):
 
 class AssistantAPI(metaclass=SingletonMeta):
 
-    def __init__(self):
-        logging.debug("Initializing the Assistant API and the")
+    def __init__(self, embedding_api_base : str, vector_db_connection : str, collection_name :str):
+        logger.debug("Initializing the Assistant API and the RAG Pipeline.")
         self.total_requests = 0
-        self.embedding = MyEmbedding(api_base=os.getenv("EMBEDDING_API_BASE"))
-        logging.debug("2/4 Connected to the embedding model")
-        self.vector_store_interface = MyVectorStoreInterface(embedding=self.embedding, connection=os.getenv("VECTOR_DB_CONNECTION"), collection_name=os.getenv("VECTOR_DB_COLLECTION"))
-        logging.debug("3/4 Connected to the Vector Store DB for the RAG system")
+        self.embedding = MyEmbedding(api_base=embedding_api_base)
+        logger.debug("1/3 Connected to the embedding model")
+        self.vector_store_interface = MyVectorStoreInterface(embedding=self.embedding, connection=vector_db_connection, collection_name=collection_name)
+        logger.debug("2/3 Connected to the Vector Store DB for the RAG system")
         self.query_api = RAGQueryPipeline(self.vector_store_interface)
-        logging.debug("4/4 RAG pipeline Ready !")
+        logger.debug("3/3 RAG pipeline Ready !")
 
     def process_user_request(self, chat_request):
 
