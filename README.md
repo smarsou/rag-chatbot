@@ -7,8 +7,8 @@ This repository is the code of my chatbot API built using Flask and OpenAI's API
 Flask REST API developed following the official documentation for a production-ready application. The project demonstrates:
 
 - Modular architecture using Blueprints.
-- Integration with OpenAI's API for processing user requests securely and efficiently.
-- Implementation of request limits and input validation to ensure stability and security.
+- Integration with a custom LLM API for processing user requests.
+- Implementation of request limits and input validation.
 
 ## RAG
 
